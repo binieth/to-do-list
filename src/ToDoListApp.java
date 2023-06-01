@@ -3,12 +3,14 @@ import java.awt.*;
 
 public class ToDoListApp {
 
+    private static JTextField textField;
+
     public static void main(String[] args) {
         // defining the initial frame of the application.
 
         JFrame frame = new JFrame("To-Do list App");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        frame.setSize(400, 600);
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
 
@@ -27,7 +29,8 @@ public class ToDoListApp {
         //Add a text field and a button for adding new to-do items. We'll create a separate method called addItem() to handle this functionality:
         JTextField textField = new JTextField();
         JButton addButton = new JButton("Add");
-        addButton.addActionListener(e -> addItem(panel, textField.getText()));
+        textField.addActionListener(e -> addItem(panel, textField));
+        addButton.addActionListener(e -> addItem(panel, textField));
 
         //Add the text field and button to the frame:
         frame.add(textField, BorderLayout.NORTH);
@@ -36,12 +39,15 @@ public class ToDoListApp {
 
     }
     //Implement the addItem() method:
-    public static void addItem(JPanel panel, String item) {
+    private static void addItem(JPanel panel, JTextField textField) {
+        String item = textField.getText();
         if(!item.isEmpty()){
             JCheckBox checkBox = new JCheckBox(item);
             panel.add(checkBox);
             panel.revalidate();
             panel.repaint();
+            textField.setText("");
+
 
         }
 
